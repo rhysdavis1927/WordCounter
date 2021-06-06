@@ -58,4 +58,20 @@ public class WordCounterTest {
         expected.add(5);
         assertEquals(expected, result.getMostFrequentWordLengths());
     }
+
+    @Test
+    public void wordCountOfCorrectlyHandlesPunctuation() throws FileNotFoundException {
+        WordCountResult result = new WordCounter().CountWords(new File("src/test/resources/punctuation.txt"));
+
+        Map<Integer, Integer> expectedCounts = new HashMap<Integer, Integer>();
+        expectedCounts.put(1, 1);
+        expectedCounts.put(2, 1);
+        expectedCounts.put(3, 2);
+        expectedCounts.put(4, 1);
+        expectedCounts.put(8, 1);
+        expectedCounts.put(11, 2);
+        assertEquals(expectedCounts, result.getCountOfEachWordLength());
+        assertEquals(8, result.getWordCount());
+        assertEquals("5.375", result.getAverageWordLength());
+    }
 }

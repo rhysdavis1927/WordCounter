@@ -13,7 +13,7 @@ public class WordCounter {
         Map<Integer, Integer> countOfEachWordLength = new HashMap<Integer, Integer>();
 
         Scanner scanner = new Scanner(file);
-        scanner.useDelimiter(Pattern.compile("[.?!]?\\s+"));
+        scanner.useDelimiter(Pattern.compile("[\".?!:;)\\]]?\\s+[\"(\\[]?"));
 
         while (scanner.hasNext()) {
             String data = scanner.next();
