@@ -46,17 +46,13 @@ public class WordCounterTest {
     public void highestWordLengthCountMatchesProvidedValue() throws FileNotFoundException {
         WordCountResult result = new WordCounter().CountWords(new File("src/test/resources/example.txt"));
 
-        assertEquals(2, result.getMostFrequentWordLengthCount());
-    }
-
-    @Test
-    public void wordLengthsOfHighestWordLengthCountMatchesProvidedValue() throws FileNotFoundException {
-        WordCountResult result = new WordCounter().CountWords(new File("src/test/resources/example.txt"));
+        CountWithWordLengths mostFrequentWordLengthsAndCount = result.getMostFrequentWordLengthsAndCount();
 
         HashSet<Integer> expected = new HashSet<Integer>();
         expected.add(4);
         expected.add(5);
-        assertEquals(expected, result.getMostFrequentWordLengths());
+        assertEquals(2, mostFrequentWordLengthsAndCount.getCount());
+        assertEquals(expected, mostFrequentWordLengthsAndCount.getWordLengths());
     }
 
     @Test

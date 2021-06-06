@@ -8,8 +8,6 @@ public class WordCounter {
     public WordCountResult CountWords(File file) throws FileNotFoundException {
         int wordCount = 0;
         int sumOfLettersInWords = 0;
-        int mostFrequentWordLengthsCount = 0;
-        Set<Integer> mostFrequentWordLengths = new HashSet<Integer>();
         Map<Integer, Integer> countOfEachWordLength = new HashMap<Integer, Integer>();
 
         Scanner scanner = new Scanner(file);
@@ -23,18 +21,8 @@ public class WordCounter {
             Integer currentCountOfWordLength = countOfEachWordLength.get(lettersInWord);
             int newCountOfWordLength = currentCountOfWordLength == null ? 1 : currentCountOfWordLength + 1;
             countOfEachWordLength.put(lettersInWord, newCountOfWordLength);
-
-            if (newCountOfWordLength == mostFrequentWordLengthsCount) {
-                mostFrequentWordLengths.add(lettersInWord);
-            }
-            else if (newCountOfWordLength > mostFrequentWordLengthsCount){
-                mostFrequentWordLengthsCount = newCountOfWordLength;
-                mostFrequentWordLengths.clear();
-                mostFrequentWordLengths.add(lettersInWord);
-            }
-
         }
         scanner.close();
-        return new WordCountResult(wordCount, sumOfLettersInWords / (double) wordCount, countOfEachWordLength, mostFrequentWordLengthsCount, mostFrequentWordLengths);
+        return new WordCountResult(wordCount, sumOfLettersInWords / (double) wordCount, countOfEachWordLength);
     }
 }
