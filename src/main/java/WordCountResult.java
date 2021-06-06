@@ -6,6 +6,7 @@ import java.util.Set;
 public class WordCountResult {
     private int wordCount;
     private double averageWordLength;
+    private CountWithWordLengths mostFrequentWordLengthsAndCount;
     private Map<Integer, Integer> countOfEachWordLength;
     private static final DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
@@ -13,6 +14,7 @@ public class WordCountResult {
         this.wordCount = wordCount;
         this.averageWordLength = averageWordLength;
         this.countOfEachWordLength = countOfEachWordLength;
+        this.mostFrequentWordLengthsAndCount = calculateMostFrequentWordLengthsAndCount();
     }
 
     public int getWordCount() {
@@ -28,8 +30,12 @@ public class WordCountResult {
     }
 
     public CountWithWordLengths getMostFrequentWordLengthsAndCount() {
+        return mostFrequentWordLengthsAndCount;
+    }
+
+    private CountWithWordLengths calculateMostFrequentWordLengthsAndCount() {
         int largestCount = 0;
-        Set<Integer> mostFrequentWordLengths = new HashSet<Integer>();
+        Set<Integer> mostFrequentWordLengths = new HashSet<>();
         for (Map.Entry<Integer, Integer> countByWordLength : countOfEachWordLength.entrySet()) {
             if (countByWordLength.getValue() == largestCount) {
                 mostFrequentWordLengths.add(countByWordLength.getKey());
