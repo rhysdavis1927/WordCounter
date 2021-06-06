@@ -8,7 +8,7 @@ public class WordCounter {
     public WordCountResult CountWords(File file) throws FileNotFoundException {
         int wordCount = 0;
         int sumOfLettersInWords = 0;
-        Map<Integer, Integer> countOfEachWordLength = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> countOfEachWordLength = new HashMap<>();
 
         Scanner scanner = new Scanner(file);
         scanner.useDelimiter(Pattern.compile("[\".?!:;)\\]]?\\s+[\"(\\[]?"));
