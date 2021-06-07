@@ -6,16 +6,14 @@ import java.util.regex.Pattern;
 public class WordCounter {
 
     public WordCountResult CountWords(File file) throws FileNotFoundException {
-        int wordCount = 0;
         int sumOfLettersInWords = 0;
         Map<Integer, Integer> countOfEachWordLength = new HashMap<>();
 
         Scanner scanner = new Scanner(file);
-        scanner.useDelimiter(Pattern.compile("[\".?!:;)\\]]?\\s+[\"(\\[]?"));
+        scanner.useDelimiter(Pattern.compile("[\".?!:;()\\[\\]\\s]+"));
 
         while (scanner.hasNext()) {
             String data = scanner.next();
-            wordCount++;
             int lettersInWord = data.length();
             sumOfLettersInWords = sumOfLettersInWords + lettersInWord;
             Integer currentCountOfWordLength = countOfEachWordLength.get(lettersInWord);
@@ -23,6 +21,23 @@ public class WordCounter {
             countOfEachWordLength.put(lettersInWord, newCountOfWordLength);
         }
         scanner.close();
-        return new WordCountResult(wordCount, sumOfLettersInWords / (double) wordCount, countOfEachWordLength);
+
+        int largestCount = 0;
+        int totalWordCount = 0;
+        Set<Integer> mostFrequentWordLengths = new HashSet<>();
+        for (Map.Entry<Integer, Integer> countByWordLength : countOfEachWordLength.entrySet()) {
+            Integer countOfWordLength = countByWordLength.getValue();
+            totalWordCount = totalWordCount + countOfWordLength;
+            if (countOfWordLength == largestCount) {
+                mostFrequentWordLengths.add(countByWordLength.getKey());
+            } else if (countOfWordLength > largestCount) {
+                largestCount = countOfWordLength;
+                mostFrequentWordLengths.clear();
+                mostFrequentWordLengths.add(countByWordLength.getKey());
+            }
+        }
+        double averageWordCount = sumOfLettersInWords / (double) totalWordCount;
+
+        return new WordCountResult(totalWordCount, averageWordCount, countOfEachWordLength,  new CountWithWordLengths(largestCount, mostFrequentWordLengths));
     }
 }
